@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  fileprocessor:
+    image: ${DOCKER_REGISTRY-}fileprocessor
+    depends_on:
+      - "redis_image"
+    build:
+      context: .
+      dockerfile: FileProcessor.Api/Dockerfile
+    ports:
+      - "64456:80"
+    links:
+      - "redis_image"
+  redis_image:
+    image: redis
+    container_name: cache
+    ports:
+      - "6379:6379"
